@@ -2,6 +2,11 @@
 
 export DB_PORT=${DB_PORT:-3306}
 
+# install dnf-plugins-core
+echo "$(date +%F_%R) [New Install] install dnf-plugins-core - new install."
+yum update -y
+yum install -y dnf-plugins-core
+
 # set server timezone
 echo "$(date +%F_%R) [Note] Setting server timezone settings to '${TZ}'"
 echo "date.timezone = ${TZ}" >> /etc/php.ini
@@ -36,7 +41,7 @@ if [ ! -f /cacti/install.lock ]; then
     # CACTI BASE INSTALL
     echo "$(date +%F_%R) [New Install] Extracting and installing Cacti files to /cacti."
     tar -xf /cacti_install/cacti-latest*.tar.gz -C /tmp
-    mv /tmp/cacti-1*/* /cacti/
+    mv /tmp/cacti-*/* /cacti/
 
     # SPINE BASE INSTALL
     echo "$(date +%F_%R) [New Install] Extracting and installing Spine files to /spine."

@@ -13,11 +13,11 @@ mkdir /tmp/update/cacti
 
 # download and uncompress cacti
 echo "$(date +%F_%R) [Upgrade] Downloading Cacti from $cacti_download_url"
-wget --no-check-certificate -qO- $cacti_download_url | tar xzC /tmp/update/cacti
+wget --no-check-certificate --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" -qO $cacti_download_url | tar xzC /tmp/update/cacti
 
 # download and uncompress spine
 echo "$(date +%F_%R) [Upgrade] Downloading Spine from $spine_download_url"
-wget --no-check-certificate -qO- /tmp/update $spine_download_url | tar xzC /tmp/update/spine/
+wget --no-check-certificate --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" -qO /tmp/update $spine_download_url | tar xzC /tmp/update/spine/
 
 # if not a remote poller, update cacti bits
 if [ ${REMOTE_POLLER} != 1 ]; then

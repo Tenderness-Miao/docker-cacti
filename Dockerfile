@@ -1,4 +1,4 @@
-FROM rockylinux:9.0
+FROM rockylinux/rockylinux:9.4
 
 LABEL org.opencontainers.image.authors="Sean Cline <smcline06@gmail.com>"
 
@@ -26,17 +26,10 @@ ENV \
     PHP_MAX_EXECUTION_TIME=60 \
     PHP_SNMP=1
 
-CMD ["/start.sh"]
+CMD ["sh /start.sh"]
 
 ## --- Start ---
 COPY start.sh /start.sh
-
-## --- SUPPORTING FILES ---
-#COPY cacti /cacti_install
-
-# --- GET LATEST VERSION
-ADD http://files.cacti.net/spine/cacti-spine-latest.tar.gz /cacti_install/cacti-spine-latest.tar.gz 
-ADD https://files.cacti.net/cacti/linux/cacti-latest.tar.gz /cacti_install/cacti-latest.tar.gz
 
 ## --- SERVICE CONFIGS ---
 COPY configs /template_configs
@@ -62,20 +55,20 @@ RUN \
     mkdir /backups && \
     mkdir /cacti && \
     mkdir /spine && \
-    yum update -y && \
     yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
-    yum install -y dnf-plugins-core && \
     yum config-manager --set-enabled crb && \
     yum install -y \
     php php-xml php-session php-sockets php-ldap php-gd \
     php-json php-mysqlnd php-gmp php-mbstring php-posix \
-    php-snmp php-intl php-common php-cli php-devel php-pear \
+    php-intl php-common php-cli php-devel php-pear \
     php-pdo && \
     yum install -y \
     rrdtool net-snmp net-snmp-utils cronie mariadb autoconf \
     bison openssl openldap mod_ssl net-snmp-libs automake \
     gcc gzip libtool make net-snmp-devel dos2unix m4 which \
-    openssl-devel mariadb-devel sendmail curl wget help2man perl-libwww-perl && \
+    openssl-devel sendmail wget perl-libwww-perl && \
+    wget --no-check-certificate --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" -q 'http://www.cacti.net/downloads/cacti-latest.tar.gz' -O /cacti_install/cacti-latest.tar.gz && \
+    wget --no-check-certificate --user-agent="Mozilla/5.0 (Windows NT  10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" -q 'http://www.cacti.net/downloads/spine/cacti-spine-latest.tar.gz' -O /cacti_install/cacti-spine-latest.tar.gz && \
     yum clean all && \
     rm -rf /var/cache/yum/* && \
     chmod 0644 /etc/crontab && \
