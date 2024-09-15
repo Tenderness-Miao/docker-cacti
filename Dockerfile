@@ -26,7 +26,7 @@ ENV \
     PHP_MAX_EXECUTION_TIME=60 \
     PHP_SNMP=1
 
-CMD ["sh /start.sh"]
+CMD ["sh", "/start.sh"]
 
 ## --- Start ---
 COPY start.sh /start.sh
