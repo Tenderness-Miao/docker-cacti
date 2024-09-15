@@ -3,9 +3,9 @@
 export DB_PORT=${DB_PORT:-3306}
 
 # install dnf-plugins-core
-echo "$(date +%F_%R) [New Install] install dnf-plugins-core - new install."
+echo "$(date +%F_%R) [New Install] install dnf-plugins-core and php-fpm - new install."
 yum update -y
-yum install -y dnf-plugins-core
+yum install -y dnf-plugins-core php-fpm
 
 # set server timezone
 echo "$(date +%F_%R) [Note] Setting server timezone settings to '${TZ}'"
