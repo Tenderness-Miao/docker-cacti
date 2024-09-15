@@ -3,9 +3,9 @@
 export DB_PORT=${DB_PORT:-3306}
 
 # install dnf-plugins-core
-echo "$(date +%F_%R) [New Install] install dnf-plugins-core and php-fpm mariadb-devel - new install."
+echo "$(date +%F_%R) [New Install] install dnf-plugins-core and php-fpm mariadb-devel help2man - new install."
 yum update -y
-yum install -y dnf-plugins-core php-fpm mariadb-devel
+yum install -y dnf-plugins-core php-fpm mariadb-devel help2man
 
 # set server timezone
 echo "$(date +%F_%R) [Note] Setting server timezone settings to '${TZ}'"
